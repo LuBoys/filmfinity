@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\FilmsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FilmsRepository::class)]
@@ -47,6 +48,9 @@ class Films
 
     #[ORM\OneToMany(mappedBy: 'films', targetEntity: Favorie::class)]
     private Collection $favories;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $date_sortie = null;
 
     public function __construct()
     {
@@ -306,6 +310,18 @@ class Films
                 $favory->setFilms(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDateSortie(): ?\DateTimeInterface
+    {
+        return $this->date_sortie;
+    }
+
+    public function setDateSortie(?\DateTimeInterface $date_sortie): static
+    {
+        $this->date_sortie = $date_sortie;
 
         return $this;
     }

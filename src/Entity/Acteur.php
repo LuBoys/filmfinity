@@ -12,17 +12,7 @@ class Acteur
 {
     public function __toString(): string
 {
-    $nameParts = [];
-
-    if ($this->name) {
-        $nameParts[] = $this->name;
-    }
-
-    if ($this->nickname) {
-        $nameParts[] = $this->nickname;
-    }
-
-    return implode(' ', $nameParts);
+    return $this->getName().' '.$this->getNickname();
 }
 
     

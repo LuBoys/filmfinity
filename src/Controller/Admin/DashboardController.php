@@ -5,6 +5,9 @@ namespace App\Controller\Admin;
 use App\Entity\Films;
 use App\Entity\Commentaire;
 use App\Entity\Acteur;
+use App\Entity\Producteur;
+use App\Entity\Genre;
+use App\Entity\Realisateur;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -50,5 +53,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Films', 'fas fa-map-marker-alt', Films::class);
         yield MenuItem::linkToCrud('Commentaire', 'fas fa-comments', Commentaire::class);
         yield MenuItem::linkToCrud('Acteur', 'fas fa-comments', Acteur::class);
+        yield MenuItem::linkToCrud('Producteur', 'fas fa-comments', Producteur::class);
+        yield MenuItem::linkToCrud('Realisateur', 'fas fa-comments', Realisateur::class);
+        yield MenuItem::linkToCrud('Genre', 'fas fa-comments', Genre::class);
     }
 }
