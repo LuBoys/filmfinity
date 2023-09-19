@@ -10,6 +10,22 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ActeurRepository::class)]
 class Acteur
 {
+    public function __toString(): string
+{
+    $nameParts = [];
+
+    if ($this->name) {
+        $nameParts[] = $this->name;
+    }
+
+    if ($this->nickname) {
+        $nameParts[] = $this->nickname;
+    }
+
+    return implode(' ', $nameParts);
+}
+
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
