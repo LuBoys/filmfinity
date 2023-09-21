@@ -7,7 +7,6 @@ use App\Form\RegistrationFormType;
 use App\Security\LoginAuthentificatorAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -24,7 +23,16 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+            // Vérifier si les mots de passe correspondent
+            if ($form->get('plainPassword')->getData() !== $form->get('plainPasswordConfirm')->getData()) {
+                // Les mots de passe ne correspondent pas, vous pouvez ajouter un message flash ou autre chose
+                $this->addFlash('error', 'Les mots de passe ne correspondent pas.');
+                return $this->render('registration/register.html.twig', [
+                    'registrationForm' => $form->createView(),
+                ]);
+            }
+
+            // encoder le mot de passe en clair
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -34,7 +42,7 @@ class RegistrationController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
-            // do anything else you need here, like send an email
+            // faites tout ce que vous devez faire ici, comme envoyer un email
 
             return $userAuthenticator->authenticateUser(
                 $user,
