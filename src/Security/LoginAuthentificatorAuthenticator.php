@@ -35,7 +35,8 @@ class LoginAuthentificatorAuthenticator extends AbstractLoginFormAuthenticator
             new UserBadge($email),
             new PasswordCredentials($request->request->get('password', '')),
             [
-                new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),            ]
+                new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
+            ]
         );
     }
 
@@ -45,18 +46,16 @@ class LoginAuthentificatorAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-    
+        
         // Vérifie si l'utilisateur possède le rôle "ROLE_ADMIN"
         if (in_array('ROLE_ADMIN', $token->getUser()->getRoles())) {
-            // Redirection vers la page d'admin
             return new RedirectResponse($this->urlGenerator->generate('admin'));
         }
-    
-        // Si l'utilisateur n'est pas admin, redirection vers la page d'accueil
-        return new RedirectResponse($this->urlGenerator->generate('homepage'));
+        
+        // Pour tous les autres utilisateurs, redirection vers la page d'accueil
+        return new RedirectResponse($this->urlGenerator->generate('app_homepage'));
     }
     
-
     protected function getLoginUrl(Request $request): string
     {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);

@@ -1,23 +1,96 @@
 <!DOCTYPE html>
 <html>
-    <head>
-    <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Inscription</title>
-    
-	<link href="public/template/css/font-awesome.min.css" rel="stylesheet" >
-	<link href="public/template/css/global.css" rel="stylesheet">
-	<link href="public/template/css/index.css" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Rajdhani&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('template/css/bootstrap.min.css') }}">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {% block stylesheets %}{% endblock %} 
-    </head>
-   <body>
-        <div id="content">
-            {% block content %}{% endblock %}
-        </div>
-        <script src="{{ asset('template/js/bootstrap.bundle.min.js') }}"></script>
-    </body>
-</html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		{% block stylesheets %}
+			<link rel="stylesheet" href="{{ asset('template/css/bootstrap.min.css') }}">
+			<link href="{{ asset('template/css/font-awesome.min.css') }}" rel="stylesheet">
+			<link href="{{ asset('template/css/global.css') }}" rel="stylesheet">
+			<link href="{{ asset('template/css/index.css') }}" rel="stylesheet">
+			<link href="{{ asset('template/css/about.css') }}" rel="stylesheet">
+			<link href="{{ asset('template/css/blog.css') }}" rel="stylesheet">
+			<link href="{{ asset('template/css/bootstrap.min.css') }}" rel="stylesheet">
+			<link href="{{ asset('template/css/font-awesome.min.css') }}" rel="stylesheet">
+			<link href="{{ asset('template/css/services.css') }}" rel="stylesheet">
+			<link
+			href="{{ asset('template/css/login.css') }}" rel="stylesheet">
+			<!-- Ajouté ici -->
+			<link href="https://fonts.googleapis.com/css2?family=Rajdhani&display=swap" rel="stylesheet">
+		{% endblock %}
+	</head>
+	<body>
+		{% block header %}
+			<section id="header">
+				<nav class="navbar navbar-expand-md navbar-light" id="navbar_sticky">
+					<div class="container">
+						<a class="navbar-brand text-white fw-bold" href="index.html">
+							<i class="fa fa-video-camera col_red me-1"></i>
+							Planet</a>
+						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+							<ul class="navbar-nav mb-0">
+								<li class="nav-item">
+									<a class="nav-link active" aria-current="page" href="index.html">Home</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="about.html">About Us</a>
+								</li>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+										Blog
+									</a>
+									<ul class="dropdown-menu drop_1" aria-labelledby="navbarDropdown">
+										<li>
+											<a class="dropdown-item" href="blog.html">Blog</a>
+										</li>
+										<li>
+											<a class="dropdown-item border-0" href="blog_detail.html">Blog Detail</a>
+										</li>
+									</ul>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="services.html">Services</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="team.html">Team</a>
+								</li>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+										Pages
+									</a>
+									<ul class="dropdown-menu drop_1" aria-labelledby="navbarDropdown">
+										<li>
+											<a class="dropdown-item" href="about.html">About Us</a>
+										</li>
+										<li>
+											<a class="dropdown-item" href="services.html">Services</a>
+										</li>
+										<li>
+											<a class="dropdown-item" href="team.html">Team</a>
+										</li>
+										<li>
+											<a class="dropdown-item border-0" href="contact.html">Contact</a>
+										</li>
+									</ul>
+								</li>
+
+								<li class="nav-item">
+									<a class="nav-link" href="contact.html">Contact Us</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+			</section>
+
+		{% endblock %}
+		<div id="body"> {% block body %}{% endblock %}
+			</div>
+			<script src="{{ asset('template/js/bootstrap.bundle.min.js') }}"></script>
+		</body>
+	</html>
