@@ -1,0 +1,138 @@
+    {% extends 'base.html.twig' %}
+
+    {% block stylesheets %}
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('assets/css/film-details.css') }}">
+    {% endblock %}
+
+    {% block title %}Détail du film - {{ film.name }}{% endblock %}
+
+    {% block body %}
+    <div class="film-container mt-5">
+        <div class="film-details">
+            <h1 class="film-title">{{ film.name }}</h1>
+            <p class="film-description">{{ film.description|raw }}</p>
+            <p class="film-duration">Durée: {{ film.duree }} minutes</p>
+            <p class="film-datesortie">Date de sortie: {{ film.dateSortie|date('d-m-Y') }}</p>
+            <div class="film-cast">
+                <div class="film-section">
+                    <h3>Acteurs</h3>
+                    <ul>
+                    {% for acteur in film.getActeurs %}
+                        <li>{{ acteur.getName }} {{ acteur.getNickname }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="film-section">
+                    <h3>Réalisateurs</h3>
+                    <ul>
+                    {% for realisateur in film.realisateurs %}
+                        <li>{{ realisateur.getName }} {{ realisateur.getNickname }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="film-section">
+                    <h3>Producteurs</h3>
+                    <ul>
+                    {% for producteur in film.getProducteurs %}
+                        <li>{{ producteur.getName }} {{ producteur.getNickname }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="film-section">
+                    <h3>Genres</h3>
+                    <ul>
+                    {% for genre in film.getGenres %}
+                        <li>{{ genre.getName }}</li> 
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="film-images">
+            <div id="filmImagesCarousel" class="carousel slide mt-4" data-ride="carousel">
+                <div class="carousel-inner">
+                    {% for image in film.images %}
+                        <div class="carousel-item {{ loop.first ? 'active' : '' }}">
+                            <img src="{{ asset('assets/img/' ~ image.getPhoto()) }}" class="d-block w-100 film-image" alt="{{ film.name }}">
+                        </div>
+                    {% endfor %}
+                </div>
+                <a class="carousel-control-prev" href="#filmImagesCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#filmImagesCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+{% if app.user %}
+    {% set userHasCommented = false %}
+    {% for commentaire in commentaires %}
+        {% if commentaire.getUsers and commentaire.getUsers.getUsername == app.user.username %}
+            {% set userHasCommented = true %}
+        {% endif %}
+    {% endfor %}
+
+    {% if not userHasCommented %}
+        <div class="film-comments">
+            <h3>Donnez votre avis</h3>
+            {{ form_start(form, {'attr': {'class': 'form-commentaire'}}) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary">Noter et commenter</button>
+            {{ form_end(form, {'render_rest': false}) }}
+        </div>
+    {% endif %}
+{% else %}
+    <p>Vous devez être <a href="{{ path('app_login') }}">connecté</a> pour commenter et noter un film.</p>
+{% endif %}
+
+
+
+<div class="comments-list">
+    <h3>Commentaires</h3>
+    {% for commentaire in commentaires %}
+        <div class="comment">
+            {% if commentaire.getUsers %}
+                <strong>{{ commentaire.getUsers.getUsername }}</strong>:
+            {% else %}
+                <strong>Utilisateur inconnu</strong>:
+            {% endif %}
+            {{ commentaire.getCommentaire }}
+            <br>
+            <small>Note : {{ commentaire.getRating }}/5</small>
+            <br>
+            <small>{{ commentaire.getDateCommentaire|date('d/m/Y H:i') }}</small>
+            
+            {% if app.user and commentaire.getUsers and app.user == commentaire.getUsers %}
+                <a href="{{ path('app_edit_comment', {'id': commentaire.id}) }}" class="btn btn-secondary btn-sm">Modifier</a>
+            {% endif %}
+        </div>
+    {% else %}
+        <p>Pas encore de commentaires.</p>
+    {% endfor %}
+</div>
+
+
+
+<!-- Nouveau bloc pour la moyenne des notes, avec la même classe 'comments-list' pour le style -->
+<div class="comments-list">
+    <h3>Note moyenne du film</h3>
+    {% if moyenne_notes is not null %}
+        <p>La note moyenne est : {{ moyenne_notes }}/5</p>
+    {% else %}
+        <p>Ce film n'a pas encore été noté.</p>
+    {% endif %}
+</div>
+
+
+
+{% endblock %}

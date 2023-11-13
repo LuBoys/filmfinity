@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Genre: {{ genre.name }}{% endblock %}
+
+{% block body %}
+    <h2>Films du genre: {{ genre.name }}</h2>
+    <div class="films-list">
+        {% for film in films %}
+            <div class="film">
+                <h3>{{ film.title }}</h3>
+                <!-- Plus d'informations sur le film -->
+                <a href="{{ path('film_detail', {'id': film.id}) }}">Voir les détails</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

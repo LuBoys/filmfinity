@@ -1,0 +1,44 @@
+{% if films is defined and films|length > 0 %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="trending__product">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+                            <div class="section-title">
+                                <h4>{{ title|default }}</h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="btn__all">
+                                <a href="#" class="primary-btn">Voir tous <span class="arrow_right"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        {% for film in films %}
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="product__item">
+                                    <a href="{{ path('app_film_detail', {'id': film.getId()}) }}">
+                                        <div class="product__item__pic set-bg" data-setbg="{{ asset('assets/img/' ~ (film.getImages()|first).getPhoto()) }}">
+                                            <!-- Vous pouvez ajouter des éléments ici, comme commentaires, vues, etc., si vous avez ces données. -->
+                                        </div>
+                                    </a>
+
+                                    <div class="product__item__text">
+                                        <ul>
+                                            {% for genre in film.getGenres() %}
+                                                <li>{{ genre }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        <h5><a href="#">{{ film.getName() }}</a></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

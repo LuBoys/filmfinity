@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le commentaire{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Modifier votre commentaire</h1>
+
+    {{ form_start(commentForm) }}
+        <div class="form-group">
+            {{ form_label(commentForm.commentaire) }}
+            {{ form_widget(commentForm.commentaire, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(commentForm.commentaire) }}
+            
+        </div>
+
+        <div class="form-group">
+            {{ form_rest(commentForm) }}
+        </div>
+    <button type="submit" class="btn btn-primary">Noter et commenter</button>
+
+</div>
+{% endblock %}

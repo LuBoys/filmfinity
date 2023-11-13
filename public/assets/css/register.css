@@ -1,0 +1,15 @@
+.test {
+    position: relative;
+}
+
+.test .test2{
+    padding-right: 40px;  /* Ajuste cette valeur pour donner plus d'espace si l'icône est trop proche du texte entré dans le champ */
+}
+
+.test span {
+    position: absolute;
+    top: 50%;
+    right: 15px;  /* Ajuste cette valeur pour déplacer l'icône horizontalement */
+    transform: translateY(-50%);
+    pointer-events: none;
+}
